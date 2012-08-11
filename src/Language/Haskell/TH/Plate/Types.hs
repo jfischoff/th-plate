@@ -1,5 +1,5 @@
 {-# LANGUAGE TupleSections, RankNTypes #-}
-module Language.Haskell.TH.Types where
+module Language.Haskell.TH.Plate.Types where
 
 import Data.Generics.Multiplate
 import Language.Haskell.TH.Syntax
