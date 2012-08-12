@@ -15,7 +15,7 @@ newtype MQ a = MQ { unMQ :: a}
     deriving (Functor)
     
 instance (Monad m, Monoid a) => Monoid (MQ (m a)) where
-    mempty  = MQ $ return mempty
+    mempty                = MQ $ return mempty
     mappend (MQ x) (MQ y) = MQ $ liftM2 mappend x y
 
 childTypes :: Info -> MQ (Q [Type])
@@ -23,7 +23,7 @@ childTypes n = do
       let go (ConT x ) = Constant $ MQ $ (unMQ . childTypes) =<< reify x
           go (VarT _ ) = Constant $ MQ $ return [] 
           go (ArrowT ) = Constant $ MQ $ return []
-          go (ListT	 ) = Constant $ MQ $ return []
+          go (ListT  ) = Constant $ MQ $ return []
           go x         = Constant $ MQ $ return [x]   
           
  
