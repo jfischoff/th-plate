@@ -22,11 +22,11 @@ childTypes :: Info -> Q [Type]
 childTypes = 
      fmap nub . unMQ . foldFor infoPL (preorderFold purePlate { typPL = go } )  
         where
-          go (ConT x ) = Constant $ MQ $ childTypes =<< reify x
-          go (VarT _ ) = Constant $ MQ $ return [] 
-          go (ArrowT ) = Constant $ MQ $ return []
-          go (ListT  ) = Constant $ MQ $ return []
-          go x         = Constant $ MQ $ return [x]   
+          go x@(ConT n ) = Constant $ MQ $ fmap (x:) $ childTypes =<< reify n
+          go (VarT _ )   = Constant $ MQ $ return [] 
+          go (ArrowT )   = Constant $ MQ $ return []
+          go (ListT  )   = Constant $ MQ $ return []
+          go x           = Constant $ MQ $ return [x]   
           
  
       
