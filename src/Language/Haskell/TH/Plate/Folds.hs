@@ -19,10 +19,10 @@ newtype MQ a = MQ { unMQ :: a}
 instance (Monad m, Monoid a) => Monoid (MQ (m a)) where
     mempty                = MQ $ return mempty
     mappend (MQ x) (MQ y) = MQ $ liftM2 mappend x y
-    
+  
 type Context = ReaderT [Name] Q
 
-childTypes :: Info -> Context [Type]
+childTypes :: Info -> Q [Type]
 childTypes = 
      fmap nub . unMQ . foldFor infoPL (preorderFold purePlate { typPL = go } )  
         where
